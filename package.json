@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file=.env --experimental-strip-types  src/server.ts",
+    "job":"node --env-file=.env --experimental-strip-types  src/job/send-image.ts",
     "build": "tsc && npm run copy:views",
     "copy:views": "shx cp -r src/Views dist/ "  
   },
