@@ -9,6 +9,7 @@ export class imageUploadService {
 
     async postImg(image: string):Promise<string | null>{
         for(const provider of this.providers){
+                
             const result = await provider.upload(image);
             if(result) return result;
         }

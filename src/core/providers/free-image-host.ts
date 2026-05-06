@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { validateBase64 } from "../../utils/validate-base64.ts";
 import { type ImgProvider } from "../ports/imgProviders.ts";
 
@@ -11,8 +11,15 @@ export class FreeImageHost implements ImgProvider{
 
     if (image.startsWith('http://') || image.startsWith('https://')) {
         console.log('URL detectada, baixando imagem...');
-        const response = await axios.get(image, { responseType: 'arraybuffer' });
-        base64Input = Buffer.from(response.data).toString('base64');
+        try{
+            const response = await axios.get(image, { responseType: 'arraybuffer' });
+         base64Input = Buffer.from(response.data).toString('base64');
+    
+        }catch(e){
+
+            if(e instanceof AxiosError) console.log(e.response?.data)
+            throw new Error("Falha ao fazer o dowload da imagen." );
+        }
     }
 
             const result = validateBase64(base64Input);

@@ -14,11 +14,17 @@ import { conn2 } from "../database/mysql-connection.ts";
     if(allImagesDatabase.length){
 
         for(const image of allImagesDatabase ){
+            try{
             const resultPostImage = await sendImgage.postImg(image.link);
-
-            if(resultPostImage){
+                if(resultPostImage){
                    const  resultUpdateLink   = await dataImages.updateLinkByid(image.id , resultPostImage);
                 }
+            }catch(e){
+                console.log(e)
+                continue;
+            }
+
+            
         }
 
     }
